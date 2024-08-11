@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tutores</title>
+    <link rel="stylesheet" href="./style/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gestión de Tutores</h1>
+
+        <!-- Crear Tutor -->
+        <div class="form-group">
+            <h3>Agregar Tutor</h3>
+            <input type="text" id="tutorName" placeholder="Nombre del Tutor">
+            <input type="text" id="tutorPhone" placeholder="Teléfono del Tutor">
+            <input type="checkbox" id="tutorDirector"> Es Director
+            <input type="number" id="idCasa" placeholder="ID de la Casa">
+            <button onclick="createTutor()">Crear Tutor</button>
+        </div>
+
+        <!-- Leer Tutor -->
+        <div class="form-group">
+            <h3>Buscar Tutor</h3>
+            <input type="number" id="tutorId" placeholder="ID del Tutor">
+            <button onclick="getTutor()">Buscar Tutor</button>
+        </div>
+
+        <!-- Actualizar Tutor -->
+        <div class="form-group">
+            <h3>Actualizar Tutor</h3>
+            <input type="number" id="updateTutorId" placeholder="ID del Tutor">
+            <input type="text" id="updateTutorName" placeholder="Nuevo Nombre del Tutor">
+            <input type="text" id="updateTutorPhone" placeholder="Nuevo Teléfono del Tutor">
+            <input type="checkbox" id="updateTutorDirector"> Es Director
+            <input type="number" id="updateIdCasa" placeholder="ID de la Casa">
+            <button onclick="updateTutor()">Actualizar Tutor</button>
+        </div>
+
+        <!-- Eliminar Tutor -->
+        <div class="form-group">
+            <h3>Eliminar Tutor</h3>
+            <input type="number" id="deleteTutorId" placeholder="ID del Tutor">
+            <button onclick="deleteTutor()">Eliminar Tutor</button>
+        </div>
+
+        <!-- Resultados -->
+        <div class="result" id="result"></div>
+    </div>
+
+    <script src="../Logica/script.js"></script>
+    
+</body>
+</html>
