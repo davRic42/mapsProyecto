@@ -11,7 +11,7 @@ class TutorDAO {
         const results = await this.db.query(query, [tutorData.tutorName, tutorData.tutorPhone, tutorData.isDirector, tutorData.idCasa]);
         return new TutorDTO(results[0][0]); // Usamos el DTO para la respuesta
     }
-
+    
     async updateTutor(id, tutorData) {
         const query = 'CALL editTutor(?, ?, ?, ?, ?)';
         const results = await this.db.query(query, [id, tutorData.tutorName, tutorData.tutorPhone, tutorData.isDirector, tutorData.idCasa]);

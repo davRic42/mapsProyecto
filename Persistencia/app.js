@@ -32,6 +32,54 @@ const requestHandler = async (req, res) => {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Server Error' }));
         }
+    } else if (req.method === 'POST' && req.url === '/addTutor') {
+        console.log('Received POST request to /addTutor');
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', async () => {
+            try {
+                const tutor = JSON.parse(body);
+                console.log('Parsed tutor data:', tutor);
+                const newTutor = await TutorDAO.createTutor(tutor);
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(newTutor));
+            } catch (err) {
+                console.error('Error adding tutor:', err.message);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Server Error' }));
+            }
+        });
+    } else if (req.method === 'PUT' && req.url.startsWith('/updateTutor/')) {
+        const id = req.url.split('/')[2];
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', async () => {
+            try {
+                const tutor = JSON.parse(body);
+                const updatedTutor = await TutorDAO.updateTutor(id, tutor);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(updatedTutor));
+            } catch (err) {
+                console.error('Error updating tutor:', err.message);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Server Error' }));
+            }
+        });
+    } else if (req.method === 'DELETE' && req.url.startsWith('/deleteTutor/')) {
+        const id = req.url.split('/')[2];
+        try {
+            await TutorDAO.deleteTutor(id);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ msg: 'Tutor deleted' }));
+        } catch (err) {
+            console.error('Error deleting tutor:', err.message);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Server Error' }));
+        }
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ msg: 'Not found' }));
