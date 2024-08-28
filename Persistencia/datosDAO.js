@@ -1,21 +1,21 @@
 const Database = require('./db');
-const TutorDTO = require('./tutorDTO'); 
+const DatosDTO = require('./datosDTO');
 
-class TutorDAO {
+class DatosDAO {
     constructor() {
         this.db = Database.getInstance();
     }
 
-    async createTutor(tutorData) {
-        const query = 'CALL crearTutor(?, ?, ?, ?)';
-        const results = await this.db.query(query, [tutorData.tutorName, tutorData.tutorPhone, tutorData.isDirector, tutorData.idCasa]);
-        return new TutorDTO(results[0][0]); // Usamos el DTO para la respuesta
+    async createUser(Data) {
+        const query = 'CALL CreateUser(?, ?, ?, ?, ?, ?)';
+        const results = await this.db.query(query, [Data.name, Data.lastName, Data.adress, Data.location, Data.latitude, Data.long]);
+        return new DatosDTO(results[0][0]); // Usamos el DTO para la respuesta
     }
-    
-    async updateTutor(id, tutorData) {
-        const query = 'CALL editTutor(?, ?, ?, ?, ?)';
-        const results = await this.db.query(query, [id, tutorData.tutorName, tutorData.tutorPhone, tutorData.isDirector, tutorData.idCasa]);
-        return results.affectedRows > 0 ? new TutorDTO({ id, ...tutorData }) : null;
+
+    async UpdateUser(id, Data) {
+        const query = 'CALL	UpdateUser(?, ?, ?, ?, ?, ?, ?)';
+        const results = await this.db.query(query, [id, Data.name, Data.lastName, Data.adress, Data.location, Data.latitude, Data.long]);
+        return results.affectedRows > 0 ? new DatosDTO({ id, ...Data }) : null;
     }
 
     async deleteTutor(id) {
@@ -28,9 +28,9 @@ class TutorDAO {
         const query = 'CALL readTutor(?)';
         try {
             const [rows] = await this.db.query(query, [id]);
-    
+
             console.log('Resultados de la consulta:', rows[0]);
-            	
+
             // Asegúrate de que los resultados están correctamente estructurados
             if (rows) {
                 const result = rows[0]; // Accede al primer resultado
@@ -44,8 +44,8 @@ class TutorDAO {
             throw error;
         }
     }
-    
-    
+
+
 }
 
-module.exports = new TutorDAO();
+module.exports = new DatosDAO();

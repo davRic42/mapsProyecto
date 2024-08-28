@@ -1,5 +1,5 @@
 const http = require('http');
-const TutorDAO = require('./tutorDAO');
+const DatosDAO = require('./datosDAO');
 
 const requestHandler = async (req, res) => {
     // Configurar encabezados CORS
@@ -18,7 +18,7 @@ const requestHandler = async (req, res) => {
     if (req.method === 'GET' && req.url.startsWith('/getTutor/')) {
         const id = req.url.split('/')[2];
         try {
-            const tutor = await TutorDAO.getTutor(id);
+            const tutor = await DatosDAO.getTutor(id);
             console.log('Tutor devuelto:', tutor); // Para depuración
             if (tutor) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -42,7 +42,7 @@ const requestHandler = async (req, res) => {
             try {
                 const tutor = JSON.parse(body);
                 console.log('Parsed tutor data:', tutor);
-                const newTutor = await TutorDAO.createTutor(tutor);
+                const newTutor = await DatosDAO.createTutor(tutor);
                 res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(newTutor));
             } catch (err) {
@@ -60,7 +60,7 @@ const requestHandler = async (req, res) => {
         req.on('end', async () => {
             try {
                 const tutor = JSON.parse(body);
-                const updatedTutor = await TutorDAO.updateTutor(id, tutor);
+                const updatedTutor = await DatosDAO.updateTutor(id, tutor);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(updatedTutor));
             } catch (err) {
@@ -72,7 +72,7 @@ const requestHandler = async (req, res) => {
     } else if (req.method === 'DELETE' && req.url.startsWith('/deleteTutor/')) {
         const id = req.url.split('/')[2];
         try {
-            await TutorDAO.deleteTutor(id);
+            await DatosDAO.deleteTutor(id);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ msg: 'Tutor deleted' }));
         } catch (err) {
