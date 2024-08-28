@@ -6,7 +6,7 @@ class Database {
             host: 'localhost',
             user: 'root',
             password: '',
-            database: 'dbcolonias'
+            database: 'direccionesdb'
         };
         this.pool = mysql.createPool(this.config);
     }
