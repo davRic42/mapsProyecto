@@ -1,29 +1,30 @@
 const apiUrl = 'http://localhost:5000';
 
 function createTutor() {
-    const tutorName = document.getElementById('tutorName').value;
-    const tutorPhone = document.getElementById('tutorPhone').value;
-    const isDirector = document.getElementById('tutorDirector').checked;
-    const idCasa = document.getElementById('idCasa').value;
+    const doc = document.getElementById('document').value;
+    const name = document.getElementById('name').value;
+    const lastName = document.getElementById('lastName').value;
+    const adress = document.getElementById('adress').value; // Verifica que este ID sea correcto y único
 
-    fetch(`${apiUrl}/addTutor`, {
+    fetch(`${apiUrl}/addData`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tutorName, tutorPhone, isDirector, idCasa })
+        body: JSON.stringify({ doc, name, lastName, adress })
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('result').innerText = 'Tutor creado: ' + JSON.stringify(data);
+        document.getElementById('result').innerText = 'registro creado: ' + JSON.stringify(data);
     })
     .catch(error => console.error('Error:', error));
 }
 
+
 function getTutor() {
     const id = document.getElementById('tutorId').value;
 
-    fetch(`http://localhost:5000/getTutor/${id}`) // No se utiliza 'no-cors'
+    fetch(`http://localhost:5000/getData/${id}`) // No se utiliza 'no-cors'
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -33,7 +34,7 @@ function getTutor() {
         .then(data => {
             console.log('Response received:', data);
             if (Object.keys(data).length === 0) {
-                document.getElementById('result').innerText = 'Tutor not found';
+                document.getElementById('result').innerText = 'not found';
             } else {
                 document.getElementById('result').innerText = 'Tutor encontrado: ' + JSON.stringify(data);
             }
@@ -47,22 +48,22 @@ function getTutor() {
 
 
 function updateTutor() {
-    const id = document.getElementById('updateTutorId').value;
-    const tutorName = document.getElementById('updateTutorName').value;
-    const tutorPhone = document.getElementById('updateTutorPhone').value;
-    const isDirector = document.getElementById('updateTutorDirector').checked;
-    const idCasa = document.getElementById('updateIdCasa').value;
+    const id = document.getElementById('updateId').value;
+    const userDoc = document.getElementById('updateDocument').value;
+    const userName = document.getElementById('updateName').value;
+    const userLastName = document.getElementById('updateLastName').value;
+    const userAdress = document.getElementById('updateAdress').checked;
 
-    fetch(`${apiUrl}/updateTutor/${id}`, {
+    fetch(`${apiUrl}/updateData/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ tutorName, tutorPhone, isDirector, idCasa })
+        body: JSON.stringify({ userDoc, userName, userLastName, userAdress })
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('result').innerText = 'Tutor actualizado: ' + JSON.stringify(data);
+        document.getElementById('result').innerText = 'registro actualizado: ' + JSON.stringify(data);
     })
     .catch(error => console.error('Error:', error));
 }
@@ -70,7 +71,7 @@ function updateTutor() {
 function deleteTutor() {
     const id = document.getElementById('deleteTutorId').value;
 
-    fetch(`${apiUrl}/deleteTutor/${id}`, {
+    fetch(`${apiUrl}/deleteUser/${id}`, {
         method: 'DELETE'
     })
     .then(response => response.json())

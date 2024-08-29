@@ -15,14 +15,14 @@ const requestHandler = async (req, res) => {
     }
 
     // Lógica de las rutas
-    if (req.method === 'GET' && req.url.startsWith('/getTutor/')) {
+    if (req.method === 'GET' && req.url.startsWith('/getData/')) {
         const id = req.url.split('/')[2];
         try {
-            const tutor = await DatosDAO.getTutor(id);
-            console.log('Tutor devuelto:', tutor); // Para depuración
-            if (tutor) {
+            const data = await DatosDAO.getUser(id);
+            console.log('Tutor devuelto:', data); // Para depuración
+            if (data) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(tutor));
+                res.end(JSON.stringify(data));
             } else {
                 res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ msg: 'Tutor not found' }));
@@ -32,26 +32,31 @@ const requestHandler = async (req, res) => {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Server Error' }));
         }
-    } else if (req.method === 'POST' && req.url === '/addTutor') {
-        console.log('Received POST request to /addTutor');
+    } else if (req.method === 'POST' && req.url === '/addData') {
+        console.log('Received POST request to /addData');
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
         });
         req.on('end', async () => {
             try {
-                const tutor = JSON.parse(body);
-                console.log('Parsed tutor data:', tutor);
-                const newTutor = await DatosDAO.createTutor(tutor);
-                res.writeHead(201, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(newTutor));
+                const data = JSON.parse(body);
+                if (data.doc && data.name && data.lastName && data.adress) {
+                    console.log('Parsed tutor data:', data);
+                    const newData = await DatosDAO.createUser(data);
+                    res.writeHead(201, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(newData));
+                } else {
+                    throw new Error('Datos incompletos');
+                }
             } catch (err) {
                 console.error('Error adding tutor:', err.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Server Error' }));
             }
         });
-    } else if (req.method === 'PUT' && req.url.startsWith('/updateTutor/')) {
+        
+    } else if (req.method === 'PUT' && req.url.startsWith('/updateData/')) {
         const id = req.url.split('/')[2];
         let body = '';
         req.on('data', chunk => {
@@ -59,20 +64,20 @@ const requestHandler = async (req, res) => {
         });
         req.on('end', async () => {
             try {
-                const tutor = JSON.parse(body);
-                const updatedTutor = await DatosDAO.updateTutor(id, tutor);
+                const data = JSON.parse(body);
+                const updatedData = await DatosDAO.updateUser(id, data);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify(updatedTutor));
+                res.end(JSON.stringify(updatedData));
             } catch (err) {
                 console.error('Error updating tutor:', err.message);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Server Error' }));
             }
         });
-    } else if (req.method === 'DELETE' && req.url.startsWith('/deleteTutor/')) {
+    } else if (req.method === 'DELETE' && req.url.startsWith('/deleteUser/')) {
         const id = req.url.split('/')[2];
         try {
-            await DatosDAO.deleteTutor(id);
+            await DatosDAO.deleteUser(id);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ msg: 'Tutor deleted' }));
         } catch (err) {

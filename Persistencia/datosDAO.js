@@ -7,25 +7,29 @@ class DatosDAO {
     }
 
     async createUser(Data) {
-        const query = 'CALL CreateUser(?, ?, ?, ?, ?, ?)';
-        const results = await this.db.query(query, [Data.name, Data.lastName, Data.adress, Data.location, Data.latitude, Data.long]);
+        const query = 'CALL CreateUser(?, ?, ?, ?)';
+        const results = await this.db.query(query, [Data.doc, Data.name, Data.lastName, Data.adress]);
+    
+        console.log('Resultados de la consulta:', results); // Añade esta línea para ver la estructura de los resultados
+    
         return new DatosDTO(results[0][0]); // Usamos el DTO para la respuesta
     }
+    
 
-    async UpdateUser(id, Data) {
-        const query = 'CALL	UpdateUser(?, ?, ?, ?, ?, ?, ?)';
-        const results = await this.db.query(query, [id, Data.name, Data.lastName, Data.adress, Data.location, Data.latitude, Data.long]);
+    async updateUser(id, Data) {
+        const query = 'CALL	UpdateUser(?, ?, ?, ?, ?)';
+        const results = await this.db.query(query, [id, Data.doc,Data.name, Data.lastName, Data.adress]);
         return results.affectedRows > 0 ? new DatosDTO({ id, ...Data }) : null;
     }
 
-    async deleteTutor(id) {
-        const query = 'CALL deleteTutor(?)';
+    async deleteUser(id) {
+        const query = 'CALL DeleteUser(?)';
         const results = await this.db.query(query, [id]);
         return results.affectedRows > 0;
     }
 
-    async getTutor(id) {
-        const query = 'CALL readTutor(?)';
+    async getUser(id) {
+        const query = 'CALL ReadUser(?)';
         try {
             const [rows] = await this.db.query(query, [id]);
 

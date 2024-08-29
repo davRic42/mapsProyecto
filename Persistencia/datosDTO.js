@@ -2,6 +2,7 @@ class DatosDTO {
     constructor(data) {
         if (data) {
             this.id = data.idDatos || null; 
+            this.doc= data.Cedula || null; 
             this.name = data.Nombres || null; 
             this.lastName = data.Apellidos || null; 
             this.adress = data.Direccion || null; 
@@ -10,6 +11,7 @@ class DatosDTO {
             this.long = data.longitud || null; 
         } else {
             this.id =null; 
+            this.doc =null; 
             this.name = null; 
             this.lastName =null; 
             this.adress =  null;

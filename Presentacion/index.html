@@ -11,39 +11,38 @@
     <div class="container">
         <h1>Mini Proyecto Datos espaciales</h1>
 
-        <!-- Crear Tutor -->
         <div class="form-group">
             <h3>agregar datos</h3>
-            <input type="text" id="tutorName" placeholder="Nombre del Tutor">
-            <input type="text" id="tutorPhone" placeholder="Teléfono del Tutor">
-            <input type="checkbox" id="tutorDirector"> Es Director
-            <input type="number" id="idCasa" placeholder="ID de la Casa">
-            <button onclick="createTutor()">Crear Tutor</button>
+            <input type="number" id="document" placeholder="cedula">
+            <input type="text" id="name" placeholder="Nombre">
+            <input type="text" id="lastName" placeholder="apellidos">
+            <input type="text" id="adress" placeholder="direccion">
+            <button onclick="createTutor()">Crear</button>
         </div>
 
-        <!-- Leer Tutor -->
+        <!-- Leer -->
         <div class="form-group">
-            <h3>Buscar Tutor</h3>
-            <input type="number" id="tutorId" placeholder="ID del Tutor">
-            <button onclick="getTutor()">Buscar Tutor</button>
+            <h3>Buscar datos</h3>
+            <input type="number" id="dataId" placeholder="ID de los datos">
+            <button onclick="getTutor()">Buscar</button>
         </div>
 
-        <!-- Actualizar Tutor -->
+        <!-- Actualizar -->
         <div class="form-group">
             <h3>Actualizar Tutor</h3>
-            <input type="number" id="updateTutorId" placeholder="ID del Tutor">
-            <input type="text" id="updateTutorName" placeholder="Nuevo Nombre del Tutor">
-            <input type="text" id="updateTutorPhone" placeholder="Nuevo Teléfono del Tutor">
-            <input type="checkbox" id="updateTutorDirector"> Es Director
-            <input type="number" id="updateIdCasa" placeholder="ID de la Casa">
+            <input type="number" id="updatedId" placeholder="ID del registro">
+            <input type="number" id="updateDocument" placeholder="cedula">
+            <input type="text" id="updatedName" placeholder="Nombre">
+            <input type="text" id="updatedLastName" placeholder="apellidos">
+            <input type="text" id="updatedAdress" placeholder="direccion">
             <button onclick="updateTutor()">Actualizar Tutor</button>
         </div>
 
-        <!-- Eliminar Tutor -->
+        <!-- Eliminar -->
         <div class="form-group">
             <h3>Eliminar Tutor</h3>
-            <input type="number" id="deleteTutorId" placeholder="ID del Tutor">
-            <button onclick="deleteTutor()">Eliminar Tutor</button>
+            <input type="number" id="deleteId" placeholder="ID del registro">
+            <button onclick="deleteTutor()">Eliminar</button>
         </div>
 
         <!-- Resultados -->
