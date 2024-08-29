@@ -22,8 +22,8 @@ function createTutor() {
 
 
 function getTutor() {
-    const id = document.getElementById('tutorId').value;
-
+    const id = document.getElementById('Idget').value;
+    console.log(id);
     fetch(`http://localhost:5000/getData/${id}`) // No se utiliza 'no-cors'
         .then(response => {
             if (!response.ok) {
@@ -36,7 +36,7 @@ function getTutor() {
             if (Object.keys(data).length === 0) {
                 document.getElementById('result').innerText = 'not found';
             } else {
-                document.getElementById('result').innerText = 'Tutor encontrado: ' + JSON.stringify(data);
+                document.getElementById('result').innerText = 'datos encontrado: ' + JSON.stringify(data);
             }
         })
         .catch(error => {
@@ -48,18 +48,18 @@ function getTutor() {
 
 
 function updateTutor() {
-    const id = document.getElementById('updateId').value;
-    const userDoc = document.getElementById('updateDocument').value;
-    const userName = document.getElementById('updateName').value;
-    const userLastName = document.getElementById('updateLastName').value;
-    const userAdress = document.getElementById('updateAdress').checked;
+    const id = document.getElementById('updatedId').value;
+    const doc = document.getElementById('updateDocument').value;
+    const name = document.getElementById('updatedName').value;
+    const lastName = document.getElementById('updatedLastName').value;
+    const adress = document.getElementById('updatedAdress').value;
 
     fetch(`${apiUrl}/updateData/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ userDoc, userName, userLastName, userAdress })
+        body: JSON.stringify({ doc, name, lastName, adress })
     })
     .then(response => response.json())
     .then(data => {
@@ -69,14 +69,14 @@ function updateTutor() {
 }
 
 function deleteTutor() {
-    const id = document.getElementById('deleteTutorId').value;
+    const id = document.getElementById('deleteId').value;
 
     fetch(`${apiUrl}/deleteUser/${id}`, {
         method: 'DELETE'
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('result').innerText = 'Tutor eliminado: ' + JSON.stringify(data);
+        document.getElementById('result').innerText = 'registro eliminado: ' + JSON.stringify(data);
     })
     .catch(error => console.error('Error:', error));
 }

@@ -65,6 +65,7 @@ const requestHandler = async (req, res) => {
         req.on('end', async () => {
             try {
                 const data = JSON.parse(body);
+                console.log('Parsed tutor data:', data);
                 const updatedData = await DatosDAO.updateUser(id, data);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify(updatedData));
@@ -79,7 +80,7 @@ const requestHandler = async (req, res) => {
         try {
             await DatosDAO.deleteUser(id);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ msg: 'Tutor deleted' }));
+            res.end(JSON.stringify({ msg: 'data deleted' }));
         } catch (err) {
             console.error('Error deleting tutor:', err.message);
             res.writeHead(500, { 'Content-Type': 'application/json' });

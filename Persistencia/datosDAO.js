@@ -19,7 +19,9 @@ class DatosDAO {
     async updateUser(id, Data) {
         const query = 'CALL	UpdateUser(?, ?, ?, ?, ?)';
         const results = await this.db.query(query, [id, Data.doc,Data.name, Data.lastName, Data.adress]);
-        return results.affectedRows > 0 ? new DatosDTO({ id, ...Data }) : null;
+        console.log('Resultados de la consulta:', results); // Añade esta línea para ver la estructura de los resultados
+    
+        return new DatosDTO(results[0][0]);
     }
 
     async deleteUser(id) {
@@ -39,7 +41,7 @@ class DatosDAO {
             if (rows) {
                 const result = rows[0]; // Accede al primer resultado
                 console.log('Primer resultado:', result);
-                return new TutorDTO(result); // Crea el DTO con los datos
+                return new DatosDTO(result); // Crea el DTO con los datos
             } else {
                 return null;
             }
