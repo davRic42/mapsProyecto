@@ -47,3 +47,8 @@ button:hover {
 .result {
     margin-top: 20px;
 }
+#map{
+    height: 300px;
+    width: 100%;
+    justify-content: center;
+}
