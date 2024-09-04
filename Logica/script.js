@@ -58,23 +58,31 @@ function getTutor() {
 
 function updateTutor() {
     const id = document.getElementById('updatedId').value;
+    const location = document.getElementById('locationUpdated').value;
+    const [latitudNum, longitudNum] = location.split(',').map(coord => coord.trim());
+    const latitude = parseFloat(latitudNum);
+    const long = parseFloat(longitudNum);
     const doc = document.getElementById('updateDocument').value;
     const name = document.getElementById('updatedName').value;
     const lastName = document.getElementById('updatedLastName').value;
     const adress = document.getElementById('updatedAdress').value;
 
+    if (location) {
     fetch(`${apiUrl}/updateData/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ doc, name, lastName, adress })
+        body: JSON.stringify({ doc, name, lastName, adress,latitude,long })
     })
         .then(response => response.json())
         .then(data => {
             document.getElementById('result').innerText = 'registro actualizado: ' + JSON.stringify(data);
         })
         .catch(error => console.error('Error:', error));
+    }else{
+        alert('selecciona una ubicación antes de actualizar')
+    }
 }
 
 function deleteTutor() {

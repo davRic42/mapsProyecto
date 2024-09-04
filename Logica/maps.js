@@ -70,8 +70,10 @@ async function addMarker(location, map) {
 function updateLocationInput(location) {
   // Actualizar el valor del campo de entrada con las coordenadas
   const locationInput = document.getElementById('location');
+  const locationUpdated=document.getElementById('locationUpdated');
   if (locationInput) {
     locationInput.value = `${location.lat().toFixed(6)}, ${location.lng().toFixed(6)}`;
+    locationUpdated.value = `${location.lat().toFixed(6)}, ${location.lng().toFixed(6)}`;
   }
 }
 

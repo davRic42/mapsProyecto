@@ -8,19 +8,19 @@ class DatosDAO {
 
     async createUser(Data) {
         const query = 'CALL CreateUser(?, ?, ?, ?, ?, ?)';
-        const results = await this.db.query(query, [Data.doc, Data.name, Data.lastName, Data.adress, Data.latitude,Data.long]);
-    
+        const results = await this.db.query(query, [Data.doc, Data.name, Data.lastName, Data.adress, Data.latitude, Data.long]);
+
         console.log('Resultados de la consulta:', results); // Añade esta línea para ver la estructura de los resultados
-    
+
         return new DatosDTO(results[0][0]); // Usamos el DTO para la respuesta
     }
-    
+
 
     async updateUser(id, Data) {
-        const query = 'CALL	UpdateUser(?, ?, ?, ?, ?)';
-        const results = await this.db.query(query, [id, Data.doc,Data.name, Data.lastName, Data.adress]);
+        const query = 'CALL	UpdateUser(?, ?, ?, ?, ?, ?, ?)';
+        const results = await this.db.query(query, [id, Data.doc, Data.name, Data.lastName, Data.adress,Data.latitude,Data.long]);
         console.log('Resultados de la consulta:', results); // Añade esta línea para ver la estructura de los resultados
-    
+
         return new DatosDTO(results[0][0]);
     }
 
