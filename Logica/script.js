@@ -1,23 +1,32 @@
 const apiUrl = 'http://localhost:5000';
 
 function createTutor() {
+    const location = document.getElementById('location').value;
+    const [latitudNum, longitudNum] = location.split(',').map(coord => coord.trim());
+    const latitude = parseFloat(latitudNum);
+    const long = parseFloat(longitudNum);
     const doc = document.getElementById('document').value;
     const name = document.getElementById('name').value;
     const lastName = document.getElementById('lastName').value;
     const adress = document.getElementById('adress').value; // Verifica que este ID sea correcto y único
+    if (location) {
+        console.log(location);
+        fetch(`${apiUrl}/addData`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ doc, name, lastName, adress,latitude,long })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerText = 'registro creado: ' + JSON.stringify(data);
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+        alert('selecciona una ubicación antes de guardar')
+    }
 
-    fetch(`${apiUrl}/addData`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ doc, name, lastName, adress })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('result').innerText = 'registro creado: ' + JSON.stringify(data);
-    })
-    .catch(error => console.error('Error:', error));
 }
 
 
@@ -61,11 +70,11 @@ function updateTutor() {
         },
         body: JSON.stringify({ doc, name, lastName, adress })
     })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('result').innerText = 'registro actualizado: ' + JSON.stringify(data);
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerText = 'registro actualizado: ' + JSON.stringify(data);
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 function deleteTutor() {
@@ -74,9 +83,9 @@ function deleteTutor() {
     fetch(`${apiUrl}/deleteUser/${id}`, {
         method: 'DELETE'
     })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('result').innerText = 'registro eliminado: ' + JSON.stringify(data);
-    })
-    .catch(error => console.error('Error:', error));
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerText = 'registro eliminado: ' + JSON.stringify(data);
+        })
+        .catch(error => console.error('Error:', error));
 }

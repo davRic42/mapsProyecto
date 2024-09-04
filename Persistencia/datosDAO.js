@@ -7,8 +7,8 @@ class DatosDAO {
     }
 
     async createUser(Data) {
-        const query = 'CALL CreateUser(?, ?, ?, ?)';
-        const results = await this.db.query(query, [Data.doc, Data.name, Data.lastName, Data.adress]);
+        const query = 'CALL CreateUser(?, ?, ?, ?, ?, ?)';
+        const results = await this.db.query(query, [Data.doc, Data.name, Data.lastName, Data.adress, Data.latitude,Data.long]);
     
         console.log('Resultados de la consulta:', results); // Añade esta línea para ver la estructura de los resultados
     
